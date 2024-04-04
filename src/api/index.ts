@@ -21,4 +21,24 @@ export const postData = async (endpoint: string, body: object) => {
   }
 };
 
+export const updateData = async (endpoint: string, body: object) => {
+  try {
+    // @ts-ignore
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const response: AxiosResponse = await axios.put(endpoint, body);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const deleteData = async (endpoint: string) => {
+  try {
+    // @ts-ignore
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const repsonse: AxiosResponse = await axios.delete(endpoint);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 export default fetchData;
