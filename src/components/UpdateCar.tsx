@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { updateData } from '../api';
-import { LoadCarsFunction } from '../types.ts';
+import { LoadCarsFunction } from '../types';
 
 export default function UpdateCar({
   id,
@@ -12,12 +12,19 @@ export default function UpdateCar({
   const [inputData, setInputData] = useState('');
   const [selectedColor, setSelectedColor] = useState('#ffffff');
 
-  console.log(id);
   const handleCarUpdate = () => {
-    updateData(`http://127.0.0.1:3000/garage/${id}`, {
-      name: inputData,
-      color: selectedColor,
-    });
+    if (!inputData) {
+      alert('Car name can not be empty !');
+    } else {
+      updateData(`http://127.0.0.1:3000/garage/${id}`, {
+        name: inputData,
+        color: selectedColor,
+      });
+    }
+
+    // patchData('http://127.0.0.1:3000/engine?id=1&status=started').then((r) =>
+    //   console.log(r),
+    // );
 
     loadCars();
     setInputData('');

@@ -5,7 +5,9 @@ const fetchData = async (endpoint: string) => {
     const response = await axios.get(endpoint);
     return response.data;
   } catch (error) {
-    console.log(error);
+    // TODO review the ts ignore
+    // @ts-ignore
+    throw new Error(error.message);
   }
 };
 
@@ -16,8 +18,9 @@ export const postData = async (endpoint: string, body: object) => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const response: AxiosResponse = await axios.post(endpoint, body);
     // const responseData = response.data;
-  } catch (err) {
-    console.log(err);
+  } catch (error) {
+    // @ts-ignore
+    throw new Error(error.message);
   }
 };
 
@@ -26,8 +29,9 @@ export const updateData = async (endpoint: string, body: object) => {
     // @ts-ignore
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const response: AxiosResponse = await axios.put(endpoint, body);
-  } catch (err) {
-    console.log(err);
+  } catch (error) {
+    // @ts-ignore
+    throw new Error(error.message);
   }
 };
 
@@ -36,8 +40,20 @@ export const deleteData = async (endpoint: string) => {
     // @ts-ignore
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const repsonse: AxiosResponse = await axios.delete(endpoint);
-  } catch (err) {
-    console.log(err);
+  } catch (error) {
+    // @ts-ignore
+    throw new Error(error.message);
+  }
+};
+
+export const patchData = async (endpoint: string) => {
+  try {
+    // @ts-ignore
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const repsonse: AxiosResponse = await axios.patch(endpoint, body);
+  } catch (error) {
+    // @ts-ignore
+    throw new Error(error.message);
   }
 };
 

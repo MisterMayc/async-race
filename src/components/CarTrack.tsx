@@ -1,7 +1,7 @@
 import '../index.css';
 import { TbCarSuv } from 'react-icons/tb';
 import { deleteData } from '../api';
-import { LoadCarsFunction } from '../types.ts';
+import { LoadCarsFunction } from '../types';
 
 export default function CarTrack({
   loadCars,
@@ -25,9 +25,10 @@ export default function CarTrack({
   return (
     <div className="w-full">
       <div
-        className="flex w-full gap-6 h-28 rounded-lg items-center"
+        className="flex w-full gap-6 h-28 items-center"
         style={{
-          border: `${selectedCar === carID ? '6' : '2'}px solid ${carColor}`,
+          borderWidth: `${selectedCar === carID ? '5' : '2'}px 0`,
+          borderColor: `${carColor}`,
         }}
       >
         <div className="flex gap-2 flex-col w-52">

@@ -1,6 +1,6 @@
+import { useState } from 'react';
 import { postData } from '../api';
 import { LoadCarsFunction } from '../types';
-import { useState } from 'react';
 
 export default function AddCar({ loadCars }: { loadCars: LoadCarsFunction }) {
   const [inputData, setInputData] = useState('');
