@@ -39,7 +39,7 @@ export const deleteData = async (endpoint: string) => {
   try {
     // @ts-ignore
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const repsonse: AxiosResponse = await axios.delete(endpoint);
+    const response: AxiosResponse = await axios.delete(endpoint);
   } catch (error) {
     // @ts-ignore
     throw new Error(error.message);
@@ -50,7 +50,9 @@ export const patchData = async (endpoint: string) => {
   try {
     // @ts-ignore
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const repsonse: AxiosResponse = await axios.patch(endpoint, body);
+    const response: AxiosResponse = await axios.patch(endpoint);
+    // TODO add the line below to all the req-s
+    return response;
   } catch (error) {
     // @ts-ignore
     throw new Error(error.message);
