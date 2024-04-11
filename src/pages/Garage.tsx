@@ -97,6 +97,9 @@ export default function Garage() {
         />
       )}
       <div className="flex items-center gap-4 justify-center mt-4">
+        <p className="absolute top-6 right-6 text-2xl">
+          Total cars {data.length}
+        </p>
         <button
           type="submit"
           onClick={() =>

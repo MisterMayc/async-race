@@ -92,6 +92,9 @@ export default function Winners() {
   return (
     <Layout>
       <div className="flex flex-col gap-8 items-center">
+        <p className="absolute top-6 right-6 text-2xl">
+          Winners Count {winners.length}
+        </p>
         <table className="flex flex-col justify-between w-screen">
           <thead>
             <tr className="flex gap-4 justify-around items-center">
