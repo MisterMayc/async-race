@@ -50,7 +50,7 @@ export const patchData = async (endpoint: string, body?: object) => {
   try {
     // @ts-ignore
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const response: AxiosResponse = await axios.patch(endpoint);
+    const response: AxiosResponse = await axios.patch(endpoint, body);
     // TODO add the line below to all the req-s
     return response;
   } catch (error) {

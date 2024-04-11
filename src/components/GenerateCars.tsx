@@ -1,6 +1,8 @@
 import { LoadCarsFunction } from '../types';
 import generateCars from './randomCars';
-import { deleteData, postData } from '../api';
+import fetchData, { deleteData, postData } from '../api';
+import { useContext, useState } from 'react';
+import WinnerContext from '../WinnerContext.ts';
 
 export default function GenerateCars({
   loadCars,
@@ -9,9 +11,9 @@ export default function GenerateCars({
   loadCars: LoadCarsFunction;
   carsToDelete: object[];
 }) {
+  const [winnersToDelete, setWinnersToDelete] = useState([]);
   const postRandomCars = () => {
     const randomCars = generateCars();
-    console.log('rancars', randomCars);
     randomCars.map((current) =>
       postData(`${import.meta.env.VITE_BACKEND_API}/garage`, {
         name: current.name,
@@ -20,16 +22,30 @@ export default function GenerateCars({
     );
   };
 
+  // const getWinners = async () => {
+  //   await fetchData(`${import.meta.env.VITE_BACKEND_API}/winners`).then((r) =>
+  //     setWinnersToDelete(r),
+  //   );
+  // };
+
+  const { winners } = useContext(WinnerContext);
+
   const deleteCar = (id: number) => {
-    // carsToDelete.map((current) =>
     // @ts-ignore
     deleteData(`http://127.0.0.1:3000/garage/${id}`);
-    // );
+  };
+  const deleteWinner = (id: number) => {
+    // @ts-ignore
+    deleteData(`http://127.0.0.1:3000/winners/${id}`);
   };
   const generation = () => {
     carsToDelete.forEach((current) => {
       // @ts-ignore
       deleteCar(current.id);
+    });
+    winners.forEach((current) => {
+      // @ts-ignore
+      deleteWinner(current.id);
     });
     loadCars();
     postRandomCars();

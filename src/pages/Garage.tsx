@@ -1,20 +1,21 @@
-import { useCallback, useEffect, useState } from 'react';
-import { ICar, IWinner } from '../types';
+import { useCallback, useContext, useEffect, useState } from 'react';
+import { ICar, IWinnerInfo } from '../types';
 import fetchData from '../api';
 import GarageControls from '../components/GarageControls';
 import RaceTrack from '../components/RaceTrack';
 import Layout from '../Layout';
 import WinnerPopup from '../components/WinnerPopup';
+import WinnerContext from '../WinnerContext.ts';
 
 export default function Garage() {
   const [data, setData] = useState<ICar[]>([]);
-  const [winnerss, setWinnerss] = useState<IWinner[]>([]);
+  const [winnerss, setWinnerss] = useState<IWinnerInfo[]>([]);
   const [selectedCar, setSelectedCar] = useState(0);
-  // Pagination
   const [currentPage, setCurrentPage] = useState(1);
   const [raceStarted, setRaceStarted] = useState(false);
-  const [winner, setWinner] = useState<number | null>(null);
-  const [isWinnerDeclared, setIsWinnerDeclared] = useState(false);
+  // const [winner, setWinner] = useState<number | null>(null);
+  // @ts-ignore
+  const { winner, setWinner } = useContext(WinnerContext);
   const carsPerPage: number = 7;
   const indexOfLastCar = currentPage * carsPerPage;
   const indexOfFirstCar = indexOfLastCar - carsPerPage;
@@ -26,19 +27,19 @@ export default function Garage() {
   };
 
   const handleWinner = useCallback(
-    (carID: number, carName: string, carColor: string) => {
+    (carID: number, carName: string, carColor: string, time?: number) => {
       if (!winner) {
-        console.log(`Car ${carID} won the race!`);
         setWinner(carID);
-        // setRaceStarted(false);
-        // setIsWinnerDeclared(true);
         setWinnerss((prevState: object | null) => {
-          // @ts-ignore
-          return [...prevState, { name: carName, id: carID, color: carColor }];
+          return [
+            // @ts-ignore
+            ...prevState,
+            { name: carName, id: carID, color: carColor, time },
+          ];
         });
       }
     },
-    [isWinnerDeclared, winner, raceStarted],
+    [winner, raceStarted],
   );
 
   useEffect(() => {
@@ -46,6 +47,7 @@ export default function Garage() {
     console.log(racersCount);
     if (racersCount === currentCars.length && winnerss.length) {
       setShowWinnerPopup(true);
+      setWinner(winnerss[0]);
     }
   }, [winnerss, racersCount]);
   const loadCars = () => {
@@ -61,7 +63,6 @@ export default function Garage() {
   const handleRaceFinish = () => {
     setRaceStarted(false);
     setShowWinnerPopup(false);
-    setWinner(0);
     setRacersCount(0);
   };
 
@@ -82,7 +83,6 @@ export default function Garage() {
         <RaceTrack
           racersCount={racersCount}
           setRacersCount={setRacersCount}
-          isWinnerDeclared={isWinnerDeclared}
           handleWinner={handleWinner}
           raceStarted={raceStarted}
           currentCars={currentCars}

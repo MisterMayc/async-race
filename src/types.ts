@@ -16,7 +16,7 @@ export interface IGarageControls {
 
 export interface RaceTrackProps {
   racersCount: number;
-  setRacersCount: (n: number) => void;
+  setRacersCount: (n: (prev: number) => number) => void;
   handleWinner: (id: number, name: string, color: string) => void;
   raceStarted: Boolean;
   currentCars: ICar[];
@@ -25,12 +25,11 @@ export interface RaceTrackProps {
   setSelectedCar: (key: number) => void;
   winner: number | null;
   setWinner: (id: number) => void;
-  isWinnerDeclared: boolean;
 }
 
 export interface IWinner {
   id: number;
-  wins: number;
+  wins?: number;
   time: number;
 }
 
@@ -43,11 +42,33 @@ export interface IWinnerInfo {
   color: string;
   id: number;
   time?: number;
+  wins?: number;
 }
 
 export interface IPopup {
   car: IWinnerInfo;
   onClose: () => void;
+  raceStarted: boolean;
+}
+
+export interface ICarTrack {
+  setRacersCount: (n: (prev: number) => number) => void;
+  racersCount: number;
+  setWinner: (n: number) => void;
+  raceStarted: Boolean;
+  loadCars: LoadCarsFunction;
+  selectedCar: number;
+  setSelectedCar: (key: number) => void;
+  carColor: string;
+  carName: string;
+  carID: number;
+  handleWinner: (
+    carID: number,
+    carName: string,
+    carColor: string,
+    time: number,
+  ) => void;
+  winner: number | null;
 }
 
 export type LoadCarsFunction = () => void;
@@ -64,5 +85,5 @@ export const CarModels: ICarModels = {
   Honda: ['Civic', 'Accord', 'CR-V'],
   Ford: ['Mustang', 'F-150', 'Explorer'],
   Mercedes: ['CLA', 'CLS', 'G-Class'],
-  BMW: ['3 Series', '5 Series', 'X5'],
+  BMW: ['M3', 'M5 F90', 'M8', 'M4', 'X5'],
 };

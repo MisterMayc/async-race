@@ -13,7 +13,6 @@ const RaceTrack: React.FC<RaceTrackProps> = ({
   loadCars,
   selectedCar,
   setSelectedCar,
-  isWinnerDeclared,
 }: RaceTrackProps) => {
   return (
     <div className="flex flex-col gap-2">
@@ -22,7 +21,6 @@ const RaceTrack: React.FC<RaceTrackProps> = ({
           <CarTrack
             racersCount={racersCount}
             setRacersCount={setRacersCount}
-            isWinnerDeclared={isWinnerDeclared}
             handleWinner={handleWinner}
             winner={winner}
             setWinner={setWinner}

@@ -3,10 +3,9 @@ import '../index.css';
 import { VscDebugStart, VscDebugStop } from 'react-icons/vsc';
 import { FaCarSide } from 'react-icons/fa';
 import { deleteData, patchData } from '../api';
-import { LoadCarsFunction } from '../types';
+import { ICarTrack } from '../types';
 
 export default function CarTrack({
-  racersCount,
   setRacersCount,
   raceStarted,
   loadCars,
@@ -17,28 +16,13 @@ export default function CarTrack({
   carID,
   handleWinner,
   winner,
-  setWinner,
-  isWinnerDeclared,
-}: {
-  racersCount: number;
-  setRacersCount: (n: (prev: number) => number) => void;
-  raceStarted: Boolean;
-  loadCars: LoadCarsFunction;
-  selectedCar: number;
-  setSelectedCar: (key: number) => void;
-  carColor: string;
-  carName: string;
-  carID: number;
-  handleWinner: (carID: number, carName: string, carColor: string) => void;
-  winner: number | null;
-  setWinner: (winner: number) => void;
-  isWinnerDeclared: boolean;
-}) {
+}: ICarTrack) {
   const [driveMode, setDriveMode] = useState(false);
   const [animationTime, setAnimationTime] = useState('');
   const [animationStatus, setAnimationStatus] = useState('paused');
   const handleCarDelete = () => {
     deleteData(`http://127.0.0.1:3000/garage/${carID}`);
+    deleteData(`http://127.0.0.1:3000/winners/${carID}`);
     loadCars();
   };
 
@@ -57,11 +41,11 @@ export default function CarTrack({
     return res;
   };
 
-  const testDrive = (id) => {
+  const testDrive = (id: number) => {
     if (!driveMode) {
-      startEngine(carID, 'stopped').then((engineResponse) => {
+      startEngine(id, 'stopped').then((engineResponse) => {
         if (engineResponse === 200) {
-          getCarPower(carID, 'started').then((r) => {
+          getCarPower(id, 'started').then((r) => {
             const speed = r.data.distance / r.data.velocity;
             setAnimationTime(`${Math.floor(speed)}ms`);
             setAnimationStatus('running');
@@ -88,7 +72,12 @@ export default function CarTrack({
               getCarPower(carID, 'drive')
                 .then(() => {
                   if (!winner) {
-                    handleWinner(carID, carName, carColor);
+                    handleWinner(
+                      carID,
+                      carName,
+                      carColor,
+                      Math.floor(raceDuration),
+                    );
                   }
                   setRacersCount((prev: number) => prev + 1);
                 })

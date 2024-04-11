@@ -16,17 +16,10 @@ export default function generateCars() {
     );
     const name = `${CarBrands[brandIndex]} ${CarModels[CarBrands[brandIndex]][modelIndex]}`;
     const color = generateRandomColor();
-
-    // postData('http://127.0.0.1:3000/garage', {
-    //   id: idCounter,
-    //   name,
-    //   color,
-    // });
     cars.push({ id: idCounter, name, color });
     // eslint-disable-next-line no-plusplus
     idCounter++;
   }
 
-  console.log(cars);
   return cars;
 }

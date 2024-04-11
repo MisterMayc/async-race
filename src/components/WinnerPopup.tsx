@@ -3,7 +3,7 @@ import { IPopup } from '../types';
 
 function WinnerPopup({ car, onClose }: IPopup) {
   return (
-    <div className="absolute flex w-screen top-0 bottom-0 items-center justify-center bg-[--transparent-bg]">
+    <div className="fixed flex w-screen top-0 bottom-0 items-center justify-center bg-[--transparent-bg]">
       <div className="absolute flex shadow-2xl flex-col gap-6 items-center justify-center w-96 h-72 bg-cyan-950 rounded-xl">
         <FaCarSide className="w-14 h-14" style={{ color: car.color }} />
         <p className="text-2xl">
