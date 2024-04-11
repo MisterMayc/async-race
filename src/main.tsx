@@ -6,6 +6,7 @@ import Garage from './pages/Garage';
 import Winners from './pages/Winners';
 import WinnerContext from './WinnerContext';
 import fetchData from './api';
+import { IWinner } from './types';
 
 const router = createBrowserRouter([
   {
@@ -20,7 +21,7 @@ const router = createBrowserRouter([
 
 function App() {
   const [winner, setWinner] = useState<number | null>(null);
-  const [winners, setWinners] = useState([]);
+  const [winners, setWinners] = useState<IWinner[]>([]);
 
   const getWinners = async () => {
     await fetchData(`${import.meta.env.VITE_BACKEND_API}/winners`).then((r) =>
@@ -29,15 +30,10 @@ function App() {
   };
 
   useEffect(() => {
-    console.log(winner, '<<<<< the winner ');
-  }, [winner]);
-
-  useEffect(() => {
     getWinners();
   }, []);
 
   return (
-    // TODO review the line below
     // eslint-disable-next-line react/jsx-no-constructed-context-values
     <WinnerContext.Provider value={{ winner, setWinner, winners, setWinners }}>
       <RouterProvider router={router} />

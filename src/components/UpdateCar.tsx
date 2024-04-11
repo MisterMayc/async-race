@@ -21,11 +21,6 @@ export default function UpdateCar({
         color: selectedColor,
       });
     }
-
-    // patchData('http://127.0.0.1:3000/engine?id=1&status=started').then((r) =>
-    //   console.log(r),
-    // );
-
     loadCars();
     setInputData('');
     setSelectedColor('#ffffff');

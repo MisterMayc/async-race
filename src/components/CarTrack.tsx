@@ -17,9 +17,9 @@ export default function CarTrack({
   handleWinner,
   winner,
 }: ICarTrack) {
-  const [driveMode, setDriveMode] = useState(false);
-  const [animationTime, setAnimationTime] = useState('');
-  const [animationStatus, setAnimationStatus] = useState('paused');
+  const [driveMode, setDriveMode] = useState<boolean>(false);
+  const [animationTime, setAnimationTime] = useState<string>('');
+  const [animationStatus, setAnimationStatus] = useState<string>('paused');
   const handleCarDelete = () => {
     deleteData(`http://127.0.0.1:3000/garage/${carID}`);
     deleteData(`http://127.0.0.1:3000/winners/${carID}`);
@@ -37,7 +37,6 @@ export default function CarTrack({
     const res = await patchData(
       `http://127.0.0.1:3000/engine?id=${id}&status=${status}`,
     );
-    console.log(res);
     return res;
   };
 

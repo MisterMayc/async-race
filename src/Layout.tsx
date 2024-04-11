@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom';
 
+// @ts-ignore
+// eslint-disable-next-line react/prop-types
 export default function Layout({ children }) {
   return (
     <div className="flex flex-col max-w-screen w-screen">

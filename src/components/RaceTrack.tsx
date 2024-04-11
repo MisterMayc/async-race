@@ -1,8 +1,7 @@
-import React from 'react';
 import CarTrack from './CarTrack';
 import { ICar, RaceTrackProps } from '../types';
 
-const RaceTrack: React.FC<RaceTrackProps> = ({
+function RaceTrack({
   racersCount,
   setRacersCount,
   winner,
@@ -13,7 +12,7 @@ const RaceTrack: React.FC<RaceTrackProps> = ({
   loadCars,
   selectedCar,
   setSelectedCar,
-}: RaceTrackProps) => {
+}: RaceTrackProps) {
   return (
     <div className="flex flex-col gap-2">
       {currentCars.map((item: ICar) => (
@@ -36,6 +35,5 @@ const RaceTrack: React.FC<RaceTrackProps> = ({
       ))}
     </div>
   );
-};
-
+}
 export default RaceTrack;

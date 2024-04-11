@@ -1,4 +1,4 @@
-# Project URL (GitHub) ->
+# Project URL (GitHub) -> (https://github.com/MisterMayc/async-race)
 
 
 # Welcome to the test task!

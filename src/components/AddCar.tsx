@@ -3,11 +3,11 @@ import { postData } from '../api';
 import { LoadCarsFunction } from '../types';
 
 export default function AddCar({ loadCars }: { loadCars: LoadCarsFunction }) {
-  const [inputData, setInputData] = useState('');
-  const [selectedColor, setSelectedColor] = useState('#ffffff');
+  const [inputData, setInputData] = useState<string>('');
+  const [selectedColor, setSelectedColor] = useState<string>('#ffffff');
   const handleCarPost = () => {
     if (!inputData) {
-      alert('please type a car name');
+      alert('Please type a car name');
     } else {
       postData(`${import.meta.env.VITE_BACKEND_API}/garage`, {
         name: inputData,

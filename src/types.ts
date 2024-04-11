@@ -1,5 +1,3 @@
-// TODO manage keeping types in another place
-
 export interface ICar {
   name: string;
   color: string;

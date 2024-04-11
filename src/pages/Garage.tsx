@@ -5,15 +5,14 @@ import GarageControls from '../components/GarageControls';
 import RaceTrack from '../components/RaceTrack';
 import Layout from '../Layout';
 import WinnerPopup from '../components/WinnerPopup';
-import WinnerContext from '../WinnerContext.ts';
+import WinnerContext from '../WinnerContext';
 
 export default function Garage() {
   const [data, setData] = useState<ICar[]>([]);
   const [winnerss, setWinnerss] = useState<IWinnerInfo[]>([]);
-  const [selectedCar, setSelectedCar] = useState(0);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [raceStarted, setRaceStarted] = useState(false);
-  // const [winner, setWinner] = useState<number | null>(null);
+  const [selectedCar, setSelectedCar] = useState<number>(0);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [raceStarted, setRaceStarted] = useState<boolean>(false);
   // @ts-ignore
   const { winner, setWinner } = useContext(WinnerContext);
   const carsPerPage: number = 7;
@@ -43,8 +42,6 @@ export default function Garage() {
   );
 
   useEffect(() => {
-    console.log(winnerss);
-    console.log(racersCount);
     if (racersCount === currentCars.length && winnerss.length) {
       setShowWinnerPopup(true);
       setWinner(winnerss[0]);
@@ -69,7 +66,6 @@ export default function Garage() {
   useEffect(() => {
     loadCars();
   }, [currentPage]);
-  console.log(currentCars);
   return (
     <Layout>
       <GarageControls

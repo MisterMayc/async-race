@@ -6,6 +6,7 @@ import fetchData, { postData, putData } from '../api';
 import WinnerContext from '../WinnerContext';
 
 export default function Winners() {
+  // @ts-ignore
   const { winner, winners, setWinners } = useContext(WinnerContext);
   const [renderingWinners, setRenderingWinners] = useState<IWinnerInfo[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -19,11 +20,32 @@ export default function Winners() {
   const paginate = (pageNumber: number) => {
     setCurrentPage(pageNumber);
   };
+  const sortWinner = async (id: number) => {
+    const carDetails = await fetchData(
+      `${import.meta.env.VITE_BACKEND_API}/garage/${id}`,
+    );
+    const winnerDetails = await fetchData(
+      `${import.meta.env.VITE_BACKEND_API}/winners/${id}`,
+    );
+    return {
+      id,
+      name: carDetails.name,
+      color: carDetails.color,
+      time: winnerDetails.time,
+      wins: winnerDetails.wins,
+    };
+  };
+  const loadWinners = async () => {
+    const winnersPromises = winners.map((winnerP: { id: number }) =>
+      sortWinner(winnerP.id),
+    );
+    const winnersData = await Promise.all(winnersPromises);
+    setRenderingWinners(winnersData);
+  };
   const updateWinners = async (winnerToUpdate: IWinner) => {
-    const winnerCar = await fetchData(
+    await fetchData(
       `${import.meta.env.VITE_BACKEND_API}/garage/${winnerToUpdate.id}`,
     );
-    console.log(winnerCar);
     const winnersData = await fetchData(
       `${import.meta.env.VITE_BACKEND_API}/winners`,
     );
@@ -57,33 +79,9 @@ export default function Winners() {
     loadWinners();
   };
 
-  const sortWinner = async (id: number) => {
-    const carDetails = await fetchData(
-      `${import.meta.env.VITE_BACKEND_API}/garage/${id}`,
-    );
-    const winnerDetails = await fetchData(
-      `${import.meta.env.VITE_BACKEND_API}/winners/${id}`,
-    );
-    return {
-      id,
-      name: carDetails.name,
-      color: carDetails.color,
-      time: winnerDetails.time,
-      wins: winnerDetails.wins,
-    };
-  };
-
-  const loadWinners = async () => {
-    const winnersPromises = winners.map((winner) => sortWinner(winner.id));
-    const winnersData = await Promise.all(winnersPromises);
-    console.log(winnersPromises);
-    console.log(winnersData);
-    setRenderingWinners(winnersData);
-  };
-
   useEffect(() => {
     loadWinners();
-  }, [winners]); // This will re-fetch winners when the winners state changes
+  }, [winners]);
 
   useEffect(() => {
     if (winner) {
@@ -93,48 +91,55 @@ export default function Winners() {
 
   return (
     <Layout>
-      <table className="flex flex-col justify-between w-screen">
-        <thead>
-          <tr className="flex gap-4 justify-around items-center">
-            <td>ID</td>
-            <td>Car</td>
-            <td>Name</td>
-            <td>Wins</td>
-            <td>Time</td>
-          </tr>
-        </thead>
-        <tbody>
-          {currentWinners?.map((current, index) => (
-            <tr key={index} className="flex gap-4 justify-around items-center">
-              <td>{current.id}</td>
-              <td>
-                <FaCarSide
-                  style={{
-                    color: current.color,
-                    width: '46px',
-                    height: '46px',
-                  }}
-                />
-              </td>
-              <td>{current.name}</td>
-              <td>{current.wins}</td>
-              <td>{current.time}</td>
+      <div className="flex flex-col gap-8 items-center">
+        <table className="flex flex-col justify-between w-screen">
+          <thead>
+            <tr className="flex gap-4 justify-around items-center">
+              <td>ID</td>
+              <td>Car</td>
+              <td>Name</td>
+              <td>Wins</td>
+              <td>Time</td>
             </tr>
-          ))}
-        </tbody>
-      </table>
-      <div>
-        <p>{currentPage}</p>
-        <button
-          type="submit"
-          onClick={() =>
-            paginate(
-              currentPage < winners.length / carsPerPage ? currentPage + 1 : 1,
-            )
-          }
-        >
-          Next Page
-        </button>
+          </thead>
+          <tbody>
+            {currentWinners?.map((current, index) => (
+              <tr
+                key={index}
+                className="flex gap-4 justify-around items-center"
+              >
+                <td>{current.id}</td>
+                <td>
+                  <FaCarSide
+                    style={{
+                      color: current.color,
+                      width: '46px',
+                      height: '46px',
+                    }}
+                  />
+                </td>
+                <td>{current.name}</td>
+                <td>{current.wins}</td>
+                <td>{current.time}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <div className="flex gap-6 justify-center items-center">
+          <p>Page {currentPage}</p>
+          <button
+            type="submit"
+            onClick={() =>
+              paginate(
+                currentPage < winners.length / carsPerPage
+                  ? currentPage + 1
+                  : 1,
+              )
+            }
+          >
+            Next Page
+          </button>
+        </div>
       </div>
     </Layout>
   );

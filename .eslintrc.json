@@ -28,7 +28,6 @@
         ],
         // TODO remove the no alert and no console !!!!!!
         "no-alert": "off",
-        "no-console": "off",
         "react/react-in-jsx-scope": ["off"],
         "react/jsx-uses-react": ["off"],
         "react/jsx-props-no-spreading": ["warn"],
