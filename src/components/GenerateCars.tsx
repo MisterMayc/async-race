@@ -13,21 +13,24 @@ export default function GenerateCars({
     const randomCars = generateCars();
     console.log('rancars', randomCars);
     randomCars.map((current) =>
-      postData('http://127.0.0.1:3000/garage', {
+      postData(`${import.meta.env.VITE_BACKEND_API}/garage`, {
         name: current.name,
         color: current.color,
       }),
     );
   };
 
-  const deleteCars = () => {
-    carsToDelete.map((current) =>
-      // @ts-ignore
-      deleteData(`http://127.0.0.1:3000/garage/${current.id}`),
-    );
+  const deleteCar = (id: number) => {
+    // carsToDelete.map((current) =>
+    // @ts-ignore
+    deleteData(`http://127.0.0.1:3000/garage/${id}`);
+    // );
   };
   const generation = () => {
-    deleteCars();
+    carsToDelete.forEach((current) => {
+      // @ts-ignore
+      deleteCar(current.id);
+    });
     loadCars();
     postRandomCars();
     loadCars();

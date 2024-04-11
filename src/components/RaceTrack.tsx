@@ -1,27 +1,31 @@
 import React from 'react';
 import CarTrack from './CarTrack';
-import { ICar, LoadCarsFunction } from '../types';
-
-interface RaceTrackProps {
-  raceStarted: Boolean;
-  currentCars: ICar[];
-  loadCars: LoadCarsFunction;
-  selectedCar: number;
-  setSelectedCar: (key: number) => void;
-}
+import { ICar, RaceTrackProps } from '../types';
 
 const RaceTrack: React.FC<RaceTrackProps> = ({
+  racersCount,
+  setRacersCount,
+  winner,
+  setWinner,
+  handleWinner,
   raceStarted,
   currentCars,
   loadCars,
   selectedCar,
   setSelectedCar,
-}) => {
+  isWinnerDeclared,
+}: RaceTrackProps) => {
   return (
-    <div>
+    <div className="flex flex-col gap-2">
       {currentCars.map((item: ICar) => (
         <div key={item.id}>
           <CarTrack
+            racersCount={racersCount}
+            setRacersCount={setRacersCount}
+            isWinnerDeclared={isWinnerDeclared}
+            handleWinner={handleWinner}
+            winner={winner}
+            setWinner={setWinner}
             raceStarted={raceStarted}
             loadCars={loadCars}
             selectedCar={selectedCar}

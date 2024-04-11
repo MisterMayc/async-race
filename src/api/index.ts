@@ -46,11 +46,24 @@ export const deleteData = async (endpoint: string) => {
   }
 };
 
-export const patchData = async (endpoint: string) => {
+export const patchData = async (endpoint: string, body?: object) => {
   try {
     // @ts-ignore
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const response: AxiosResponse = await axios.patch(endpoint);
+    // TODO add the line below to all the req-s
+    return response;
+  } catch (error) {
+    // @ts-ignore
+    throw new Error(error.message);
+  }
+};
+
+export const putData = async (endpoint: string, body?: object) => {
+  try {
+    // @ts-ignore
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const response: AxiosResponse = await axios.put(endpoint, body);
     // TODO add the line below to all the req-s
     return response;
   } catch (error) {

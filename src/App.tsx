@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './App.css';
-import Winners from './views/Winners';
-import Garage from './views/Garage';
+import Winners from './pages/Winners';
+import Garage from './pages/Garage';
 
 export default function App() {
   const [view, setView] = useState('garage');

@@ -6,7 +6,7 @@ export default function UpdateCar({
   id,
   loadCars,
 }: {
-  id: number;
+  id: number | null;
   loadCars: LoadCarsFunction;
 }) {
   const [inputData, setInputData] = useState('');
@@ -39,15 +39,17 @@ export default function UpdateCar({
   };
 
   return (
-    <div>
+    <div className="flex justify-center items-center gap-4 bg-cyan-950 p-2 rounded-lg">
       <input
         type="text"
         value={inputData}
+        className="rounded-lg pl-2 h-10"
         onChange={(e) => handleInputChange(e.target.value)}
         placeholder="Give me a car name"
       />
       <input
         type="color"
+        className="rounded-lg p-0 h-10 border-0"
         value={selectedColor}
         onChange={(e) => handleColorChange(e.target.value)}
       />
