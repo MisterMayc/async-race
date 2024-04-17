@@ -1,6 +1,6 @@
-### Project URL (GitHub) -> (https://github.com/MisterMayc/async-race)
+### [Project URL (GitHub)](https://github.com/MisterMayc/async-race)
 ### Hakob Torosyan
-## Checklist Score - 355 points
+## Checklist Score - 350 points
 
 # Welcome to the test task!
 
