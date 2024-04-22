@@ -1,4 +1,4 @@
-### [Project URL (GitHub)](https://github.com/MisterMayc/async-race)
+### [Project URL (GitHub)](https://curious-choux-13f53b.netlify.app/)
 ### Hakob Torosyan
 ## Checklist Score - 350 points
 
